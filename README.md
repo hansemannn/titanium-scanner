@@ -2,6 +2,8 @@
 
 Use the iOS 13+ `VisionKit` document scanner API in Appcelerator Titanium.
 
+<img src="./example.gif" width="400" />
+
 ## Requirements
 
 - [x] Titanium SDK 8.2.0+
