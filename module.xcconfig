@@ -1,0 +1,15 @@
+//
+// PLACE ANY BUILD DEFINITIONS IN THIS FILE AND THEY WILL BE 
+// PICKED UP DURING THE APP BUILD FOR YOUR MODULE
+//
+// see the following webpage for instructions on the settings
+// for this file:
+// https://developer.apple.com/library/content/featuredarticles/XcodeConcepts/Concept-Build_Settings.html
+// 
+
+//
+// How to manually add a Framework (example)
+// Note: Titanium SDK 6.2.2+ detects and links frameworks automatically
+//
+
+OTHER_LDFLAGS=$(inherited) -weak_framework Vision -weak_framework VisionKit
