@@ -1,6 +1,8 @@
 # Titanium iOS 13+ Document Scanner
 
-Use the iOS 13+ `VisionKit` document scanner API in Appcelerator Titanium.
+Use the iOS 13+ `VisionKit` document scanner API in Appcelerator Titanium. Pro tip: Combine with
+[Ti.Vision](https://github.com/hansemannn/titanium-vision) to apply machine learning to the detected
+document.
 
 <img src="./example.gif" width="400" />
 
