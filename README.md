@@ -53,7 +53,7 @@ Scanner.addEventListener('success', function (event) {
 
     var image = Ti.UI.createImageView({
           height: '70%',
-          image: Scanner.imageOfPageAtIndex(0) /* Or many images via "event.pageCount" */
+          image: Scanner.imageOfPageAtIndex(0) /* Or many images via "event.count" */
     });
 
     win2.add(image);

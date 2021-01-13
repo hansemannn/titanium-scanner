@@ -32,7 +32,7 @@ Scanner.addEventListener('success', function (event) {
     Ti.API.warn(event);
 
     var win2 = Ti.UI.createWindow({ backgroundColor: '#333' });
-    var image = Ti.UI.createImageView({ height: '70%', image: Scanner.imageOfPageAtIndex(0) /* Or many images via "event.pageCount" */ });
+    var image = Ti.UI.createImageView({ height: '70%', image: Scanner.imageOfPageAtIndex(0) /* Or many images via "event.count" */ });
 
     win2.add(image);
     win2.open();
