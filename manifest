@@ -2,9 +2,9 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.0.0
+version: 1.0.1
 apiversion: 2
-architectures: armv7 arm64 i386 x86_64
+architectures: arm64 x86_64
 description: titanium-scanner
 author: Hans Knöchel
 license: MIT
@@ -15,4 +15,5 @@ name: titanium-scanner
 moduleid: ti.scanner
 guid: 558d8ef6-a01d-4474-ac25-777fdecf86a8
 platform: iphone
-minsdk: 8.2.0
+mac: false
+minsdk: 9.2.0
