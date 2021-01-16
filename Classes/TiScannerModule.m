@@ -69,12 +69,16 @@
 {
   [self fireEvent:@"cancel"];
   [controller dismissViewControllerAnimated:YES completion:nil];
+  _scannerViewController.delegate = nil;
+  _scannerViewController = nil;
 }
 
 - (void)documentCameraViewController:(VNDocumentCameraViewController *)controller didFailWithError:(NSError *)error
 {
   [self fireEvent:@"error" withObject:@{ @"error": error.localizedDescription }];
   [controller dismissViewControllerAnimated:YES completion:nil];
+  _scannerViewController.delegate = nil;
+  _scannerViewController = nil;
 }
 
 - (void)documentCameraViewController:(VNDocumentCameraViewController *)controller didFinishWithScan:(VNDocumentCameraScan *)scan
@@ -83,6 +87,8 @@
 
   [self fireEvent:@"success" withObject:@{ @"count": @(scan.pageCount), @"title": NULL_IF_NIL(scan.title) }];
   [controller dismissViewControllerAnimated:YES completion:nil];
+  _scannerViewController.delegate = nil;
+  _scannerViewController = nil;
 }
 
 @end
