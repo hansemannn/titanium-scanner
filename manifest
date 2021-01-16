@@ -15,5 +15,5 @@ name: titanium-scanner
 moduleid: ti.scanner
 guid: 558d8ef6-a01d-4474-ac25-777fdecf86a8
 platform: iphone
-mac: false
+mac: true
 minsdk: 9.2.0
