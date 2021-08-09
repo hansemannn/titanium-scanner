@@ -5,6 +5,7 @@
  * Copyright (c) 2019 Your Company. All rights reserved.
  */
 
+#import <PDFKit/PDFKit.h>
 #import <TitaniumKit/TitaniumKit.h>
 #import "TiScannerModule.h"
 #import "TiBase.h"
@@ -49,6 +50,40 @@
   TiBlob *blob = [[TiBlob alloc] initWithImage:image];
 
   return blob;
+}
+
+- (TiBlob *)pdfOfPageAtIndex:(id)index
+{
+  ENSURE_SINGLE_ARG(index, NSNumber);
+
+  if (_currentScan == nil) {
+    return nil;
+  }
+
+  UIImage *image = [_currentScan imageOfPageAtIndex:[(NSNumber *)index integerValue]];
+
+  PDFDocument *pdfDocument = [PDFDocument new];
+  PDFPage *pdfPage = [[PDFPage alloc] initWithImage:image];
+  [pdfDocument insertPage:pdfPage atIndex:0];
+
+  return [[TiBlob alloc] initWithData:[pdfDocument dataRepresentation] mimetype:@"application/pdf"];
+}
+
+- (TiBlob *)pdfOfAllPages:(id)unused
+{
+  if (_currentScan == nil) {
+    return nil;
+  }
+
+  PDFDocument *pdfDocument = [PDFDocument new];
+
+  for (NSUInteger index = 0; index < _currentScan.pageCount; index++) {
+    UIImage *image = [_currentScan imageOfPageAtIndex:index];
+    PDFPage *pdfPage = [[PDFPage alloc] initWithImage:image];
+    [pdfDocument insertPage:pdfPage atIndex:index];
+  }
+
+  return [[TiBlob alloc] initWithData:[pdfDocument dataRepresentation] mimetype:@"application/pdf"];
 }
 
 #pragma mark Utils

@@ -14,4 +14,14 @@
   VNDocumentCameraScan *_currentScan;
 }
 
+- (NSNumber *)isSupported:(id)unused;
+
+- (void)showScanner:(id)value;
+
+- (TiBlob *)imageOfPageAtIndex:(id)index;
+
+- (TiBlob *)pdfOfPageAtIndex:(id)index;
+
+- (TiBlob *)pdfOfAllPages:(id)unused;
+
 @end

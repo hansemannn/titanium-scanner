@@ -12,4 +12,4 @@
 // Note: Titanium SDK 6.2.2+ detects and links frameworks automatically
 //
 
-OTHER_LDFLAGS=$(inherited) -weak_framework Vision -weak_framework VisionKit
+OTHER_LDFLAGS=$(inherited) -weak_framework Vision -weak_framework VisionKit -weak_framework PDFKit

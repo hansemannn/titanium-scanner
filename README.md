@@ -8,23 +8,39 @@ document.
 
 ## Requirements
 
-- [x] Titanium SDK 8.2.0+
 - [x] iOS 13+
+- [x] Titanium SDK 8.2.0+
+- [x] Granted camera permissions
+
+## APIs
+
+### Methods
+
+- [x] `showScanner`
+- [x] `imageOfPageAtIndex(index)` (after the `success` event)
+- [x] `pdfOfPageAtIndex(index)` (after the `success` event)
+- [x] `pdfOfAllPages()` (after the `success` event)
+
+### Events
+
+- [x] `success`
+- [x] `error`
+- [x] `cancel`
 
 ## Example
 
 ```js
-var Scanner = require('ti.scanner');
+import Scanner from 'ti.scanner';
 
-var win = Ti.UI.createWindow({
+const win = Ti.UI.createWindow({
     backgroundColor: '#fff'
 });
 
-var btn = Ti.UI.createButton({
+const btn = Ti.UI.createButton({
     title: 'Scan Document'
 });
 
-btn.addEventListener('click', function () {
+btn.addEventListener('click', () => {
     Ti.Media.requestCameraPermissions(event => {
         if (!event.success) {
             alert('No camera permissions');
@@ -34,26 +50,26 @@ btn.addEventListener('click', function () {
     });
 });
 
-Scanner.addEventListener('cancel', function () {
+Scanner.addEventListener('cancel', () => {
     Ti.API.warn('Cancelled …');
 });
 
-Scanner.addEventListener('error', function (event) {
+Scanner.addEventListener('error', event => {
     Ti.API.error('Errored …');
     Ti.API.error(event.error);
 });
 
-Scanner.addEventListener('success', function (event) {
+Scanner.addEventListener('success', event => {
     Ti.API.warn('Succeeded …');
     Ti.API.warn(event);
 
-    var win2 = Ti.UI.createWindow({
-          backgroundColor: '#333'
+    const win2 = Ti.UI.createWindow({
+        backgroundColor: '#333'
     });
 
-    var image = Ti.UI.createImageView({
-          height: '70%',
-          image: Scanner.imageOfPageAtIndex(0) /* Or many images via "event.count" */
+    const image = Ti.UI.createImageView({
+        height: '70%',
+        image: Scanner.imageOfPageAtIndex(0) /* Or pdfOfPageAtIndex(0) if you need the PDF of it, or many images via "event.count" */
     });
 
     win2.add(image);
