@@ -19,7 +19,7 @@ document.
 - [x] `showScanner`
 - [x] `imageOfPageAtIndex(index)` (after the `success` event)
 - [x] `pdfOfPageAtIndex(index)` (after the `success` event)
-- [x] `pdfOfAllPages()` (after the `success` event)
+- [x] `pdfOfAllPages(params)` (after the `success` event - the params include `resizeImages` and `padding` to be used to generate resized A4 PDF's)
 
 ### Events
 
