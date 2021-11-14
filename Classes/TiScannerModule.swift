@@ -128,9 +128,9 @@ extension TiScannerModule: VNDocumentCameraViewControllerDelegate {
   }
   
   func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-    fireEvent("success", with: ["count": scan.pageCount, "title": scan.title])
-    
     currentScan = scan
+
+    fireEvent("success", with: ["count": scan.pageCount, "title": scan.title])
     dismissAndCleanup()
   }
 }
