@@ -41,14 +41,14 @@ class TiScannerModule: TiModule {
   // MARK: Public APIs
 
   @objc(isSupported:)
-  func isSupported(unused: Any) -> Bool {
+  func isSupported(unused: [Any]?) -> Bool {
     return VNDocumentCameraViewController.isSupported
   }
 
   @objc(showScanner:)
-  func showScanner(unused: Any) {
+  func showScanner(unused: [Any]?) {
     if let scanner = scanner {
-      TiApp.init().showModalController(scanner, animated: true)
+      TiApp.controller().present(scanner, animated: true, completion: nil)
     }
   }
 
