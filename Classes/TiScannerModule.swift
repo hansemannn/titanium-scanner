@@ -14,13 +14,18 @@ import PDFKit
 
 @objc(TiScannerModule)
 class TiScannerModule: TiModule {
+  
+  var _scanner: VNDocumentCameraViewController?
 
-  lazy var scanner: VNDocumentCameraViewController? = {
-    let scannerViewController = VNDocumentCameraViewController()
-    scannerViewController.delegate = self
+  func scannerInstance() -> VNDocumentCameraViewController {
+    if let scanner = _scanner {
+      return scanner
+    }
+    _scanner = VNDocumentCameraViewController()
+    _scanner!.delegate = self
 
-    return scannerViewController
-  }()
+    return _scanner!
+  }
 
   var currentScan: VNDocumentCameraScan?
   
@@ -33,9 +38,8 @@ class TiScannerModule: TiModule {
   }
   
   func dismissAndCleanup() {
-    scanner?.dismiss(animated: true, completion: nil)
-    scanner?.delegate = nil
-    scanner = nil
+    _scanner?.delegate = nil
+    _scanner = nil
   }
 
   // MARK: Public APIs
@@ -47,9 +51,7 @@ class TiScannerModule: TiModule {
 
   @objc(showScanner:)
   func showScanner(unused: [Any]?) {
-    if let scanner = scanner {
-      TiApp.controller().present(scanner, animated: true, completion: nil)
-    }
+    TiApp.controller().present(scannerInstance(), animated: true, completion: nil)
   }
 
   @objc(imageOfPageAtIndex:)
@@ -119,11 +121,15 @@ class TiScannerModule: TiModule {
 extension TiScannerModule: VNDocumentCameraViewControllerDelegate {
   func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
     fireEvent("cancel")
+
+    controller.dismiss(animated: true, completion: nil)
     dismissAndCleanup()
   }
   
   func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
     fireEvent("error", with: ["error": error.localizedDescription])
+    
+    controller.dismiss(animated: true, completion: nil)
     dismissAndCleanup()
   }
   
@@ -131,6 +137,8 @@ extension TiScannerModule: VNDocumentCameraViewControllerDelegate {
     currentScan = scan
 
     fireEvent("success", with: ["count": scan.pageCount, "title": scan.title])
+    
+    controller.dismiss(animated: true, completion: nil)
     dismissAndCleanup()
   }
 }
