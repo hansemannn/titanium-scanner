@@ -8,13 +8,25 @@
 
 import UIKit
 import TitaniumKit
+import PDFKit
+
+#if canImport(Vision)
 import Vision
 import VisionKit
-import PDFKit
+#endif
 
 @objc(TiScannerModule)
 class TiScannerModule: TiModule {
   
+  func moduleGUID() -> String {
+    return "fc40b436-6d90-4cf0-9627-f56e4321b30f"
+  }
+  
+  override func moduleId() -> String! {
+    return "ti.scanner"
+  }
+  
+#if canImport(Vision)
   var _scanner: VNDocumentCameraViewController?
 
   func scannerInstance() -> VNDocumentCameraViewController {
@@ -29,13 +41,6 @@ class TiScannerModule: TiModule {
 
   var currentScan: VNDocumentCameraScan?
   
-  func moduleGUID() -> String {
-    return "fc40b436-6d90-4cf0-9627-f56e4321b30f"
-  }
-  
-  override func moduleId() -> String! {
-    return "ti.scanner"
-  }
   
   func dismissAndCleanup() {
     _scanner?.delegate = nil
@@ -114,7 +119,10 @@ class TiScannerModule: TiModule {
     
     return TiBlob(data: pdfDocument.dataRepresentation(), mimetype: "application/pdf")
   }
+  #endif
 }
+
+#if canImport(Vision)
 
 // MARK: VNDocumentCameraViewControllerDelegate
 
@@ -136,7 +144,7 @@ extension TiScannerModule: VNDocumentCameraViewControllerDelegate {
   func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
     currentScan = scan
 
-    fireEvent("success", with: ["count": scan.pageCount, "title": scan.title])
+    fireEvent("success", with: ["count": scan.pageCount, "title": scan.title] as [String : Any])
     
     controller.dismiss(animated: true, completion: nil)
     dismissAndCleanup()
@@ -181,3 +189,4 @@ extension TiScannerModule {
     return pdfData as Data
   }
 }
+#endif
