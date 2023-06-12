@@ -87,20 +87,23 @@ class TiScannerModule: TiModule {
 
     var resizeImages = false
     var padding = 80
+    var compressionQuality = 1.0
 
     if let params = args?.first as? [String: Any] {
       resizeImages = params["resizeImages"] as? Bool ?? false
       padding = params["padding"] as? Int ?? 80
+      compressionQuality = params["compressionQuality"] as? Double ?? 1.0
     }
     
     let pdfDocument = PDFDocument()
 
     for index in 0...scan.pageCount - 1 {
-      let image = scan.imageOfPage(at: index)
+      //let image = scan.imageOfPage(at: index)
+      let image = UIImage(data: scan.imageOfPage(at: index).jpegData(compressionQuality: compressionQuality)!)
 
       if resizeImages {
         // Get the raw data representation
-        if let pdfData = A4PDFDataFromCentered(image: image, with: Float(padding)) {
+        if let pdfData = A4PDFDataFromCentered(image: image!, with: Float(padding)) {
           // Generate a PDF document from the raw data
           if let pdfDataDocument = PDFDocument(data: pdfData) {
             // Get the page from the generate document
@@ -111,7 +114,7 @@ class TiScannerModule: TiModule {
           }
         }
       } else {
-        if let pdfPage = PDFPage(image: image) {
+        if let pdfPage = PDFPage(image: image!) {
           pdfDocument.insert(pdfPage, at: index)
         }
       }
